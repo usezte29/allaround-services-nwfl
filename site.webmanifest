@@ -1,0 +1,12 @@
+{
+  "name": "All Around Services of NWFL",
+  "short_name": "All Around",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F3EFE6",
+  "theme_color": "#F3EFE6",
+  "icons": [
+    { "src": "assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
