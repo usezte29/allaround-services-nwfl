@@ -11,22 +11,27 @@ it works there too.
 ## What's here
 
 ```
-index.html         Home
-kitchens.html      Kitchen remodeling
-bathrooms.html     Bathroom remodeling
-exteriors.html     Decks & porches (#decks), siding (#siding), fences (#fences)
-painting.html      Interior/exterior painting + cabinet refinishing
-work.html          Photo gallery (filterable, with a lightbox)
-about.html         About Steve & the company
-reviews.html       All seven customer reviews
-contact.html       Free-estimate form
-404.html           Not-found page
+wrangler.jsonc     Cloudflare deploy config (see "Deploying" below)
+README.md          This file
 
-assets/css/site.css   One stylesheet, all pages
-assets/js/site.js     One script, all pages (no libraries)
-assets/img/           36 project photos as WebP, plus the OG image and icons
-
-robots.txt  sitemap.xml  site.webmanifest  .nojekyll
+public/            <- everything served to the public lives in here, and
+│                     nothing else. Deploying this folder, rather than the
+│                     repo root, is what keeps .git off the internet.
+├── index.html         Home
+├── kitchens.html      Kitchen remodeling
+├── bathrooms.html     Bathroom remodeling
+├── exteriors.html     Decks & porches (#decks), siding (#siding), fences (#fences)
+├── painting.html      Interior/exterior painting + cabinet refinishing
+├── work.html          Photo gallery (filterable, with a lightbox)
+├── about.html         About Steve & the company
+├── reviews.html       All seven customer reviews
+├── contact.html       Free-estimate form
+├── 404.html           Not-found page
+├── assets/css/site.css   One stylesheet, all pages
+├── assets/js/site.js     One script, all pages (no libraries)
+├── assets/img/           36 project photos as WebP, plus the OG image and icons
+├── _headers              Cloudflare cache + security headers
+└── robots.txt  sitemap.xml  site.webmanifest  .nojekyll
 ```
 
 The header and footer are **deliberately duplicated** into every page rather than
@@ -79,11 +84,35 @@ names). Replace them with real project names whenever those are available.
 ## Running it locally
 
 ```bash
-python -m http.server 8808
+python -m http.server 8808 --directory public
 ```
 
 Then open <http://localhost:8808>. (There is also an `allaround` entry in
 `../.claude/launch.json`.)
+
+---
+
+## Deploying
+
+Hosted on Cloudflare Workers static assets. From this folder:
+
+```bash
+npx wrangler deploy
+```
+
+First time only, you'll need `npx wrangler login` — it opens a browser to
+authorise your Cloudflare account.
+
+Two things `wrangler.jsonc` is doing on purpose:
+
+- **`name` is pinned** to `allaround-services-nwfl`. A deploy from this folder
+  can only publish to that hostname, so one client's site can't land on
+  another's URL by accident.
+- **`directory` is `./public`**, never the repo root. Wrangler uploads
+  everything in the assets directory — point it at the root and it publishes
+  `.git`, which makes the entire repository downloadable by anyone. A
+  `.assetsignore` file did *not* reliably exclude it in wrangler 4.131, so the
+  separation is physical rather than configured.
 
 ---
 

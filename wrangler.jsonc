@@ -1,0 +1,18 @@
+{
+  // Cloudflare Workers static-asset deployment.
+  //
+  //   npx wrangler deploy        (run from this folder)
+  //
+  // Two deliberate choices:
+  //   * "name" is pinned, so a deploy from this folder can only ever publish to
+  //     THIS hostname - that is what stops one site landing on another's URL.
+  //   * "directory" points at public/, which holds nothing but the served site.
+  //     Deploying the repo root would upload .git and publish the whole history.
+  "name": "allaround-services-nwfl",
+  "compatibility_date": "2026-09-11",
+  "assets": {
+    "directory": "./public",
+    // unknown paths render the styled 404 page instead of a bare error
+    "not_found_handling": "404-page"
+  }
+}

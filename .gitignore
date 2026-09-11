@@ -1,6 +1,9 @@
 # local screenshots, not part of the site
 preview/
 
+# wrangler local state
+.wrangler/
+
 # OS noise
 Thumbs.db
 desktop.ini

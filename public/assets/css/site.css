@@ -654,6 +654,9 @@ p:last-child{margin-bottom:0}
 @media (max-width:400px){
   .logo-txt span{display:none}
   .logo{gap:.55rem}
+  /* at 320px the logo + call pill + burger would otherwise run 1px long */
+  .hdr-in{gap:8px}
+  .hdr-tel{padding:.62rem .8rem}
 }
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:2.6rem}
